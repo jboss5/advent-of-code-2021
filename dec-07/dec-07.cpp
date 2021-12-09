@@ -14,17 +14,14 @@ struct MinMax {
     long max = -1;
 };
 
-vector<long> loadInput(string filename) {
+void loadInput(string filename, vector<long> &input) {
     std::ifstream in(filename);
-    vector<long> input;
     for(string str; std::getline(in, str, ',');) {
         input.push_back(std::stol(str));
     }
-
-    return input;
 }
 
-MinMax findMinMax(vector<long> input) {
+MinMax findMinMax(vector<long> &input) {
     struct MinMax minMax;
     for(int i = 0; i < input.size(); i++) {
         long t = input[i];
@@ -35,7 +32,7 @@ MinMax findMinMax(vector<long> input) {
     return minMax;
 }
 
-vector<long> p1Lowest(vector<long> &input, MinMax minMax, bool shouldPrint) {
+vector<long> p1Lowest(vector<long> &input, MinMax &minMax, bool shouldPrint) {
     vector<long> costs;
     for(int i = minMax.min; i < minMax.max; i++) {
         int total = 0;
@@ -60,7 +57,7 @@ long getSum(long &t) {
     return output;
 }
 
-vector<long> p2Lowest(vector<long> &input, MinMax minMax, bool shouldPrint) {
+vector<long> p2Lowest(vector<long> &input, MinMax &minMax, bool shouldPrint) {
     vector<long> costs;
     for(int i = minMax.min; i < minMax.max; i++) {
         long total = 0;
@@ -87,7 +84,8 @@ long findLowest(vector<long> &numbers) {
 }
 
 int main() {
-    vector<long> input = loadInput("input.txt");
+    vector<long> input;
+    loadInput("input.txt", input);
     
     struct MinMax minMax = findMinMax(input);
     cout<<"min "<<minMax.min<<" max "<<minMax.max<<endl;
