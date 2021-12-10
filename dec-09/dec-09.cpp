@@ -67,104 +67,6 @@ bool isBottomRow(int &vIndex, int colSize) {
     return (vIndex == colSize-1);
 }
 
-int traverseSouth(int vIndex, int hIndex, vector<string> &input) {
-    int count = 0;
-    for(int i = vIndex+1; i < input.size(); i++) {
-        int current = getCurrentPoint(input[i].at(hIndex));
-        if(current == 9) return count;
-        count++;
-    }
-
-    return count;
-}
-
-int traverseNorth(int vIndex, int hIndex, vector<string> &input) {
-    int count = 0;
-    for(int i = vIndex; i >= 0; i--) {
-        int current = getCurrentPoint(input[i].at(hIndex));
-        if(current == 9) return count;
-        count++;
-    }
-
-    return count;
-}
-
-void addBasinsMiddle(vector<string> &input, int &vIndex, int &hIndex, vector<int> &basinNumbers) {
-    cout<<"hIndex: "<<hIndex<<" vIndex: "<<vIndex<<endl;
-    int count = 0;
-
-    cout<<"i++ k++"<<endl;
-    for(int i = vIndex; i < input.size(); i++) {
-        int k;
-        for(k = hIndex; k < input[i].size(); k++) {
-            int current = getCurrentPoint(input[i].at(k));
-            if(current == 9) break;
-            cout<<"current "<<current<<endl;
-            cout<<"adding"<<endl; count++;
-        }
-
-        if(k == hIndex) break;
-    }
-
-    cout<<"i++ k--"<<endl;
-    for(int i = vIndex; i < input.size(); i++) {
-        int k;
-        for(k = hIndex-1; k >= 0; k--) {
-            int current = getCurrentPoint(input[i].at(k));
-            if(current == 9) break;
-            cout<<"current "<<current<<endl;
-            cout<<"adding"<<endl; count++;
-        }
-
-        if(k == hIndex-1) break;
-    }
-
-    cout<<"i-- k++"<<endl;
-    for(int i = vIndex-1; i >= 0; i--) {
-        int k;
-        for(k = hIndex; k < input[i].size(); k++) {
-            int current = getCurrentPoint(input[i].at(k));
-            if(current == 9) break;
-            cout<<"current "<<current<<endl;
-            cout<<"adding"<<endl; count++;
-        }
-
-        if(k == hIndex) break;
-    }
-
-    cout<<"i-- k--"<<endl;
-    for(int i = vIndex-1; i >= 0; i--) {
-        int k;
-        for(k = hIndex-1; k >= 0; k--) {
-            int current = getCurrentPoint(input[i].at(k));
-            if(current == 9) break;
-            cout<<"current "<<current<<endl;
-            cout<<"adding"<<endl; count++;
-        }
-
-        if(k == hIndex-1) break;
-    }
-
-    basinNumbers.push_back(count);
-}
-
-void addBasins(vector<string> &input, int &vIndex, int &hIndex, vector<int> &basinNumbers) {
-    int count = 0;
-    for(int i = hIndex; i < input[vIndex].size(); i++) {
-        if(getCurrentPoint(input[vIndex].at(i)) == 9) break;
-        count += traverseNorth(vIndex, i, input);
-        count += traverseSouth(vIndex, i, input);
-    }
-
-    for(int i = hIndex-1; i >= 0; i--) {
-        if(getCurrentPoint(input[vIndex].at(i)) == 9) break;
-        count += traverseNorth(vIndex, i, input);
-        count += traverseSouth(vIndex, i, input);
-    }
-
-    basinNumbers.push_back(count);
-}
-
 void getNeighbors(Coord &current, vector<string> &input, vector<Coord> &neighbors) {
     if(current.h > 0) neighbors.push_back(Coord{current.v, current.h - 1});
     if(current.v > 0) neighbors.push_back(Coord{current.v - 1, current.h});
@@ -179,6 +81,7 @@ bool alreadyVisited(vector<Coord> &reached, Coord &coord) {
 
     return false;
 }
+
 
 void search(vector<string> &input, int &vIndex, int &hIndex, vector<int> &basinNumbers) {
     vector<Coord> reached;
