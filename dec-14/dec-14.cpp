@@ -59,11 +59,8 @@ void part1Take2(const string& filename, const int &STEPS) {
             char insertChar = polymer.pairInsertions[it->first];
             string firstPair = string() + it->first.at(0) + insertChar;
             string secondPair = string() + insertChar + it->first.at(1);
-            if(firstPair == secondPair) currMap[firstPair] += it->second + 1;
-            else {
-                currMap[firstPair] += it->second;
-                currMap[secondPair] += it->second;
-            }
+            currMap[firstPair] += it->second;
+            currMap[secondPair] += it->second;
         }
 
         prevMap.clear();
@@ -75,7 +72,6 @@ void part1Take2(const string& filename, const int &STEPS) {
         cout<<"("<<it->first<<","<<it->second<<")"<<endl;
 
         charTotals[it->first.at(0)] += it->second;
-        charTotals[it->first.at(1)] += it->second;
     }
 
     uint64_t maxNum = 0, minNum = ULLONG_MAX;
@@ -85,7 +81,7 @@ void part1Take2(const string& filename, const int &STEPS) {
     }
 
     cout<<"Max num: "<<maxNum<<" , minNum: "<<minNum<<endl;
-    cout<<"Total: "<<(maxNum+1 - minNum)/2<<endl;
+    cout<<"Total: "<<(maxNum - minNum)+1<<endl;
 }
 
 int main() {
